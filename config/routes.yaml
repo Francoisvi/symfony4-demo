@@ -15,3 +15,8 @@ property.show:
     controller: App\Controller\PropertyController::show
     requirements:
         slug: '[a-z0-9\-]*'
+
+admin.property.index:
+    path: /admin
+    controller: App\Controller\Admin\AdminPropertyController::index
+
