@@ -16,8 +16,12 @@ class AdminPropertyController extends AbstractController
    
     private $repository;
     private $em;
-    
-   
+
+    /**
+     * AdminPropertyController constructor.
+     * @param PropertyRepository $repository
+     * @param EntityManagerInterface $em
+     */
     public function __construct(PropertyRepository $repository, EntityManagerInterface $em)
     {
         $this->repository = $repository;
@@ -30,7 +34,7 @@ class AdminPropertyController extends AbstractController
         return $this->render('admin/property/index.html.twig', compact('properties'));
     }
 
-    
+
     /**
      * @Route("/admin/property/create", name="admin.property.new")
      */
@@ -52,7 +56,7 @@ class AdminPropertyController extends AbstractController
         ]);
 
     }
-    
+
     /**
      * @Route("/admin/property/{id}", name="admin.property.edit", methods="GET|POST")
      * @param Property $property

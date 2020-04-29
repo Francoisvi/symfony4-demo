@@ -7,17 +7,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class HomeController extends AbstractController{
+class HomeController extends AbstractController
+{
 
-        
+
     /**
      * index
      *
-     * @param  PropertyRepository $repository
+     * @param PropertyRepository $repository
      * @return Response
      */
-    public function index(PropertyRepository $repository) : Response {     
-        $properties = $repository->findLatest();   
+    public function index(PropertyRepository $repository): Response
+    {
+        $properties = $repository->findLatest();
         return $this->render('pages/home.html.twig', [
             'properties' => $properties
         ]);
