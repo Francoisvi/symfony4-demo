@@ -5,7 +5,10 @@ namespace App\Controller;
 use App\Entity\Property;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -28,41 +31,32 @@ class PropertyController extends AbstractController
         $this->em = $em;
     }
 
-    public function index() : Response 
+    public function index(PaginatorInterface $paginator, Request $request) : Response
     {
-        //afficher
-        /*
-        $property = $this->repository->findAllVisible();
-        dump($property);
-        $this->em->flush();
-        */
-        
-        
-        
-        
-        /*
-        //inserer
-        $property = new Property();
-        $property->setTitle('Mon premier bien')
-        ->setPrice('200000')
-        ->setRooms(4)
-        ->setBedrooms(3)
-        ->setDescription('Une petite description')
-                ->setSurface(60)
-                ->setFloor(4)
-                ->setHeat(1)
-                ->setCity('Argonay')
-                ->setAddress('75 allée de la Seigneurie')
-                ->setPostalCode('74370');
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($property);
-        $em->flush();
-        */
+
+        // gérer le traitement dans le controleur
+
+
+        $query = $this->repository->findAllVisibleQuery();
+
+
+
+        $properties = $paginator->paginate(
+            $this->repository->findAllVisibleQuery(), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
+
+
+
+        
+
 
 
         return $this->render('property/index.html.twig', [
-                'current_menu' => 'properties'
+                'current_menu' => 'properties',
+                'properties' => $properties
             ]    
         );
     }
